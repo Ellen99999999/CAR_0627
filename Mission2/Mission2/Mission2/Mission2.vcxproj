@@ -23,18 +23,6 @@
     <ClInclude Include="..\Types.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CarFactory.cpp">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="..\CarSedan.h">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="..\CarSUV.h">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-    <ClCompile Include="..\CarTruck.h">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
     <ClCompile Include="..\main.cpp" />
     <ClCompile Include="..\testcase.cpp" />
   </ItemGroup>

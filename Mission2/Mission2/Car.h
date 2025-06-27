@@ -15,7 +15,7 @@ class CarFactory;
 
 class ICar {
 public:
-	virtual bool isValidCar(CarInfo info) = 0;
+	virtual bool isValidCar() = 0;
 	virtual void SetEngine(int v) = 0;
 	virtual void SetBreakSystem(int v) = 0;
 	virtual void SetSteeringSystem(int v) = 0;
@@ -27,9 +27,8 @@ public:
         myCar.nCarType = 3;
     }
     ~CarTruck() = default;
-    bool isValidCar(CarInfo info) override {
-        myCar.nCarType = 3; //truck
-        if (myCar.nCarType != info.nCarType) return false;
+    bool isValidCar() override {
+        if (myCar.nCarType != 3) return false;
         if (myCar.nEngine == WIA) return false;
         if (myCar.nBreakSystem == MANDO) return false;
         if (myCar.nBreakSystem == BOSCH_B && myCar.nStreeringSystem != BOSCH_S) return false;
@@ -42,7 +41,7 @@ public:
         myCar.nBreakSystem = v;
     }
     void SetSteeringSystem(int v) override {
-        myCar.nStreeringSystem;
+        myCar.nStreeringSystem = v;
     }
 private:
     CarInfo myCar = {};
@@ -54,9 +53,9 @@ public:
 		myCar.nCarType = 2;
 	}
 	~CarSUV() = default;
-	bool isValidCar(CarInfo info) override {
-        if (myCar.nCarType != info.nCarType) return false;
-		if (info.nEngine == TOYOTA) return false;
+	bool isValidCar() override {
+        if (myCar.nCarType != 2) return false;
+		if (myCar.nEngine == TOYOTA) return false;
 		if (myCar.nBreakSystem == BOSCH_B && myCar.nStreeringSystem != BOSCH_S) return false;
         
 		return true;
@@ -68,7 +67,7 @@ public:
 		myCar.nBreakSystem = v;
 	}
 	void SetSteeringSystem(int v) override {
-		myCar.nStreeringSystem;
+		myCar.nStreeringSystem = v;
 	}
 private:
 	CarInfo myCar = {};
@@ -80,8 +79,8 @@ public:
 		myCar.nCarType = 1;
 	}
 	~CarSedan() = default;
-	bool isValidCar(CarInfo info) override {
-		if (myCar.nCarType != info.nCarType) return false;
+	bool isValidCar() override {
+		if (myCar.nCarType != 1) return false;
         if (myCar.nBreakSystem == CONTINENTAL) return false;
         if (myCar.nBreakSystem == BOSCH_B && myCar.nStreeringSystem != BOSCH_S) return false;
 		return true;
@@ -93,7 +92,7 @@ public:
 		myCar.nBreakSystem = v;
 	}
 	void SetSteeringSystem(int v) override {
-		myCar.nStreeringSystem;
+		myCar.nStreeringSystem = v;
 	}
 private:
 	CarInfo myCar = {};
@@ -102,80 +101,77 @@ private:
 
 class CarFactory {
 public:
+    CarFactory() = default;
 	const int MS = 1000 * 1000;
-	int anCarInfo[10] = {};
+    CarInfo stInfo = {};
 	char buf[100] = {};
 	int nStep;
 	int nUserInput;
 	ICar* pCar = nullptr;
-    CarFactory() = default;
+    
 	void RunProducedCar()
     {
-        CarInfo stCar = { anCarInfo[CarType_Q] , anCarInfo[Engine_Q] , anCarInfo[brakeSystem_Q] , anCarInfo[SteeringSystem_Q] };
-
-        if (pCar->isValidCar(stCar) == false)
+        if (pCar->isValidCar() == false)
         {
-            printf("자동차가 동작되지 않습니다\n");
-        }
-        else
-        {
-            if (anCarInfo[Engine_Q] == 4)
+            if (stInfo.nEngine == 4)
             {
                 printf("엔진이 고장나있습니다.\n");
                 printf("자동차가 움직이지 않습니다.\n");
             }
             else
-            {
-                if (anCarInfo[CarType_Q] == 1)
-                    printf("Car Type : Sedan\n");
-                if (anCarInfo[CarType_Q] == 2)
-                    printf("Car Type : SUV\n");
-                if (anCarInfo[CarType_Q] == 3)
-                    printf("Car Type : Truck\n");
-                if (anCarInfo[Engine_Q] == 1)
-                    printf("Engine : GM\n");
-                if (anCarInfo[Engine_Q] == 2)
-                    printf("Engine : TOYOTA\n");
-                if (anCarInfo[Engine_Q] == 3)
-                    printf("Engine : WIA\n");
-                if (anCarInfo[brakeSystem_Q] == 1)
-                    printf("Brake System : Mando");
-                if (anCarInfo[brakeSystem_Q] == 2)
-                    printf("Brake System : Continental\n");
-                if (anCarInfo[brakeSystem_Q] == 3)
-                    printf("Brake System : Bosch\n");
-                if (anCarInfo[SteeringSystem_Q] == 1)
-                    printf("SteeringSystem : Bosch\n");
-                if (anCarInfo[SteeringSystem_Q] == 2)
-                    printf("SteeringSystem : Mobis\n");
+                printf("자동차가 동작되지 않습니다\n");
+        }
+        else
+        {
+            if (stInfo.nCarType == 1)
+                printf("Car Type : Sedan\n");
+            if (stInfo.nCarType == 2)
+                printf("Car Type : SUV\n");
+            if (stInfo.nCarType == 3)
+                printf("Car Type : Truck\n");
+            if (stInfo.nEngine == 1)
+                printf("Engine : GM\n");
+            if (stInfo.nEngine == 2)
+                printf("Engine : TOYOTA\n");
+            if (stInfo.nEngine == 3)
+                printf("Engine : WIA\n");
+            if (stInfo.nBreakSystem == 1)
+                printf("Brake System : Mando");
+            if (stInfo.nBreakSystem == 2)
+                printf("Brake System : Continental\n");
+            if (stInfo.nBreakSystem == 3)
+                printf("Brake System : Bosch\n");
+            if (stInfo.nStreeringSystem == 1)
+                printf("SteeringSystem : Bosch\n");
+            if (stInfo.nStreeringSystem == 2)
+                printf("SteeringSystem : Mobis\n");
 
-                printf("자동차가 동작됩니다.\n");
-            }
+            printf("자동차가 동작됩니다.\n");           
         }
     }
 	void TestProducedCar()
     {
-        if (anCarInfo[CarType_Q] == SEDAN && anCarInfo[brakeSystem_Q] == CONTINENTAL)
+        if (stInfo.nCarType == SEDAN && stInfo.nBreakSystem == CONTINENTAL)
         {
             printf("자동차 부품 조합 테스트 결과 : FAIL\n");
             printf("Sedan에는 Continental제동장치 사용 불가\n");
         }
-        else if (anCarInfo[CarType_Q] == SUV && anCarInfo[Engine_Q] == TOYOTA)
+        else if (stInfo.nCarType == SUV && stInfo.nEngine == TOYOTA)
         {
             printf("자동차 부품 조합 테스트 결과 : FAIL\n");
             printf("SUV에는 TOYOTA엔진 사용 불가\n");
         }
-        else if (anCarInfo[CarType_Q] == TRUCK && anCarInfo[Engine_Q] == WIA)
+        else if (stInfo.nCarType == TRUCK && stInfo.nEngine == WIA)
         {
             printf("자동차 부품 조합 테스트 결과 : FAIL\n");
             printf("Truck에는 WIA엔진 사용 불가\n");
         }
-        else if (anCarInfo[CarType_Q] == TRUCK && anCarInfo[brakeSystem_Q] == MANDO)
+        else if (stInfo.nCarType == TRUCK && stInfo.nBreakSystem == MANDO)
         {
             printf("자동차 부품 조합 테스트 결과 : FAIL\n");
             printf("Truck에는 Mando제동장치 사용 불가\n");
         }
-        else if (anCarInfo[brakeSystem_Q] == BOSCH_B && anCarInfo[SteeringSystem_Q] != BOSCH_S)
+        else if (stInfo.nBreakSystem == BOSCH_B && stInfo.nStreeringSystem != BOSCH_S)
         {
             printf("자동차 부품 조합 테스트 결과 : FAIL\n");
             printf("Bosch제동장치에는 Bosch조향장치 이외 사용 불가\n");
@@ -261,7 +257,6 @@ public:
             return false;
         }
         return true;
-
     }
 	bool CheckValidity() {
         // 숫자로 된 대답인지 확인
@@ -365,7 +360,7 @@ public:
 
 	void SelectCarType(int answer)
     {
-        anCarInfo[CarType_Q] = answer;
+        stInfo.nCarType = answer;
         if (answer == 1) {
             printf("차량 타입으로 Sedan을 선택하셨습니다.\n");
             pCar = new CarSedan();
@@ -382,7 +377,7 @@ public:
 
 	void SelectEngine(int answer)
     {
-        anCarInfo[Engine_Q] = answer;
+        stInfo.nEngine = answer;
         if (answer == 1)
             printf("GM 엔진을 선택하셨습니다.\n");
         if (answer == 2)
@@ -394,7 +389,7 @@ public:
     }
 	void SelectbrakeSystem(int answer)
     {
-        anCarInfo[brakeSystem_Q] = answer;
+        stInfo.nBreakSystem = answer;
         if (answer == 1)
             printf("MANDO 제동장치를 선택하셨습니다.\n");
         if (answer == 2)
@@ -405,7 +400,7 @@ public:
     }
 	void SelectSteeringSystem(int answer)
     {
-        anCarInfo[SteeringSystem_Q] = answer;
+        stInfo.nStreeringSystem = answer;
         if (answer == 1)
             printf("BOSCH 조향장치를 선택하셨습니다.\n");
         if (answer == 2)

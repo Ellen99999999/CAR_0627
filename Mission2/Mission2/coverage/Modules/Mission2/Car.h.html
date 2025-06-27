@@ -26,7 +26,7 @@ class CarFactory;
 
 class ICar {
 public:
-	virtual bool isValidCar(CarInfo info) = 0;
+	virtual bool isValidCar() = 0;
 	virtual void SetEngine(int v) = 0;
 	virtual void SetBreakSystem(int v) = 0;
 	virtual void SetSteeringSystem(int v) = 0;
@@ -38,9 +38,8 @@ public:
         myCar.nCarType = 3;
     }</span>
     ~CarTruck() = default;
-<span style = "background-color:#dfd">    bool isValidCar(CarInfo info) override {
-        myCar.nCarType = 3; //truck
-        if (myCar.nCarType != info.nCarType) return false;
+<span style = "background-color:#dfd">    bool isValidCar() override {
+        if (myCar.nCarType != 3) return false;
         if (myCar.nEngine == WIA) return false;
         if (myCar.nBreakSystem == MANDO) return false;
         if (myCar.nBreakSystem == BOSCH_B &amp;&amp; myCar.nStreeringSystem != BOSCH_S) return false;
@@ -52,9 +51,9 @@ public:
     void SetBreakSystem(int v) override {
         myCar.nBreakSystem = v;
     }
-    void SetSteeringSystem(int v) override {</span>
-        myCar.nStreeringSystem;
-<span style = "background-color:#dfd">    }</span>
+    void SetSteeringSystem(int v) override {
+        myCar.nStreeringSystem = v;
+    }</span>
 private:
     CarInfo myCar = {};
 };
@@ -65,9 +64,9 @@ public:
 		myCar.nCarType = 2;
 	}</span>
 	~CarSUV() = default;
-<span style = "background-color:#dfd">	bool isValidCar(CarInfo info) override {
-        if (myCar.nCarType != info.nCarType) return false;
-		if (info.nEngine == TOYOTA) return false;
+<span style = "background-color:#dfd">	bool isValidCar() override {
+        if (myCar.nCarType != 2) return false;
+		if (myCar.nEngine == TOYOTA) return false;
 		if (myCar.nBreakSystem == BOSCH_B &amp;&amp; myCar.nStreeringSystem != BOSCH_S) return false;</span>
         
 <span style = "background-color:#dfd">		return true;
@@ -78,9 +77,9 @@ public:
 	void SetBreakSystem(int v) override {
 		myCar.nBreakSystem = v;
 	}
-	void SetSteeringSystem(int v) override {</span>
-		myCar.nStreeringSystem;
-<span style = "background-color:#dfd">	}</span>
+	void SetSteeringSystem(int v) override {
+		myCar.nStreeringSystem = v;
+	}</span>
 private:
 	CarInfo myCar = {};
 };
@@ -91,8 +90,8 @@ public:
 		myCar.nCarType = 1;
 	}</span>
 	~CarSedan() = default;
-<span style = "background-color:#dfd">	bool isValidCar(CarInfo info) override {
-		if (myCar.nCarType != info.nCarType) return false;
+<span style = "background-color:#dfd">	bool isValidCar() override {
+		if (myCar.nCarType != 1) return false;
         if (myCar.nBreakSystem == CONTINENTAL) return false;
         if (myCar.nBreakSystem == BOSCH_B &amp;&amp; myCar.nStreeringSystem != BOSCH_S) return false;
 		return true;
@@ -103,9 +102,9 @@ public:
 	void SetBreakSystem(int v) override {
 		myCar.nBreakSystem = v;
 	}
-	void SetSteeringSystem(int v) override {</span>
-		myCar.nStreeringSystem;
-<span style = "background-color:#dfd">	}</span>
+	void SetSteeringSystem(int v) override {
+		myCar.nStreeringSystem = v;
+	}</span>
 private:
 	CarInfo myCar = {};
 };
@@ -113,82 +112,79 @@ private:
 
 class CarFactory {
 public:
-<span style = "background-color:#dfd">	const int MS = 1000 * 1000;
-	int anCarInfo[10] = {};
-	char buf[100] = {};</span>
+<span style = "background-color:#dfd">    CarFactory() = default;
+	const int MS = 1000 * 1000;</span>
+    CarInfo stInfo = {};
+<span style = "background-color:#dfd">	char buf[100] = {};</span>
 	int nStep;
 	int nUserInput;
-<span style = "background-color:#dfd">	ICar* pCar = nullptr;
-    CarFactory() = default;</span>
+<span style = "background-color:#dfd">	ICar* pCar = nullptr;</span>
+    
 	void RunProducedCar()
 <span style = "background-color:#dfd">    {
-        CarInfo stCar = { anCarInfo[CarType_Q] , anCarInfo[Engine_Q] , anCarInfo[brakeSystem_Q] , anCarInfo[SteeringSystem_Q] };</span>
-
-<span style = "background-color:#dfd">        if (pCar-&gt;isValidCar(stCar) == false)</span>
+        if (pCar-&gt;isValidCar() == false)</span>
         {
-<span style = "background-color:#dfd">            printf("ÀÚµ¿Â÷°¡ µ¿ÀÛµÇÁö ¾Ê½À´Ï´Ù\n");
-        }</span>
-        else
-        {
-<span style = "background-color:#dfd">            if (anCarInfo[Engine_Q] == 4)</span>
+<span style = "background-color:#dfd">            if (stInfo.nEngine == 4)</span>
             {
-<span style = "background-color:#fdd">                printf("¿£ÁøÀÌ °íÀå³ªÀÖ½À´Ï´Ù.\n");
+<span style = "background-color:#dfd">                printf("¿£ÁøÀÌ °íÀå³ªÀÖ½À´Ï´Ù.\n");
                 printf("ÀÚµ¿Â÷°¡ ¿òÁ÷ÀÌÁö ¾Ê½À´Ï´Ù.\n");
             }</span>
             else
-            {
-<span style = "background-color:#dfd">                if (anCarInfo[CarType_Q] == 1)
-                    printf("Car Type : Sedan\n");
-                if (anCarInfo[CarType_Q] == 2)</span>
-<span style = "background-color:#fdd">                    printf("Car Type : SUV\n");</span>
-<span style = "background-color:#dfd">                if (anCarInfo[CarType_Q] == 3)</span>
-<span style = "background-color:#fdd">                    printf("Car Type : Truck\n");</span>
-<span style = "background-color:#dfd">                if (anCarInfo[Engine_Q] == 1)
-                    printf("Engine : GM\n");
-                if (anCarInfo[Engine_Q] == 2)</span>
-<span style = "background-color:#fdd">                    printf("Engine : TOYOTA\n");</span>
-<span style = "background-color:#dfd">                if (anCarInfo[Engine_Q] == 3)</span>
-<span style = "background-color:#fdd">                    printf("Engine : WIA\n");</span>
-<span style = "background-color:#dfd">                if (anCarInfo[brakeSystem_Q] == 1)
-                    printf("Brake System : Mando");
-                if (anCarInfo[brakeSystem_Q] == 2)</span>
-<span style = "background-color:#fdd">                    printf("Brake System : Continental\n");</span>
-<span style = "background-color:#dfd">                if (anCarInfo[brakeSystem_Q] == 3)</span>
-<span style = "background-color:#fdd">                    printf("Brake System : Bosch\n");</span>
-<span style = "background-color:#dfd">                if (anCarInfo[SteeringSystem_Q] == 1)
-                    printf("SteeringSystem : Bosch\n");
-                if (anCarInfo[SteeringSystem_Q] == 2)</span>
-<span style = "background-color:#fdd">                    printf("SteeringSystem : Mobis\n");</span>
+<span style = "background-color:#dfd">                printf("ÀÚµ¿Â÷°¡ µ¿ÀÛµÇÁö ¾Ê½À´Ï´Ù\n");
+        }</span>
+        else
+        {
+<span style = "background-color:#dfd">            if (stInfo.nCarType == 1)
+                printf("Car Type : Sedan\n");
+            if (stInfo.nCarType == 2)
+                printf("Car Type : SUV\n");
+            if (stInfo.nCarType == 3)
+                printf("Car Type : Truck\n");
+            if (stInfo.nEngine == 1)
+                printf("Engine : GM\n");
+            if (stInfo.nEngine == 2)
+                printf("Engine : TOYOTA\n");
+            if (stInfo.nEngine == 3)
+                printf("Engine : WIA\n");
+            if (stInfo.nBreakSystem == 1)
+                printf("Brake System : Mando");
+            if (stInfo.nBreakSystem == 2)
+                printf("Brake System : Continental\n");
+            if (stInfo.nBreakSystem == 3)
+                printf("Brake System : Bosch\n");
+            if (stInfo.nStreeringSystem == 1)
+                printf("SteeringSystem : Bosch\n");
+            if (stInfo.nStreeringSystem == 2)
+                printf("SteeringSystem : Mobis\n");</span>
 
-<span style = "background-color:#dfd">                printf("ÀÚµ¿Â÷°¡ µ¿ÀÛµË´Ï´Ù.\n");</span>
-            }
+<span style = "background-color:#dfd">            printf("ÀÚµ¿Â÷°¡ µ¿ÀÛµË´Ï´Ù.\n");           </span>
         }
 <span style = "background-color:#dfd">    }</span>
 	void TestProducedCar()
 <span style = "background-color:#dfd">    {
-        if (anCarInfo[CarType_Q] == SEDAN &amp;&amp; anCarInfo[brakeSystem_Q] == CONTINENTAL)</span>
+        if (stInfo.nCarType == SEDAN &amp;&amp; stInfo.nBreakSystem == CONTINENTAL)</span>
         {
-<span style = "background-color:#fdd">            printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
+<span style = "background-color:#dfd">            printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
             printf("Sedan¿¡´Â ContinentalÁ¦µ¿ÀåÄ¡ »ç¿ë ºÒ°¡\n");
-        }</span>
-<span style = "background-color:#dfd">        else if (anCarInfo[CarType_Q] == SUV &amp;&amp; anCarInfo[Engine_Q] == TOYOTA)</span>
+        }
+        else if (stInfo.nCarType == SUV &amp;&amp; stInfo.nEngine == TOYOTA)</span>
         {
 <span style = "background-color:#dfd">            printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
             printf("SUV¿¡´Â TOYOTA¿£Áø »ç¿ë ºÒ°¡\n");
         }
-        else if (anCarInfo[CarType_Q] == TRUCK &amp;&amp; anCarInfo[Engine_Q] == WIA)</span>
+        else if (stInfo.nCarType == TRUCK &amp;&amp; stInfo.nEngine == WIA)</span>
         {
 <span style = "background-color:#dfd">            printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
             printf("Truck¿¡´Â WIA¿£Áø »ç¿ë ºÒ°¡\n");
         }
-        else if (anCarInfo[CarType_Q] == TRUCK &amp;&amp; anCarInfo[brakeSystem_Q] == MANDO)</span>
+        else if (stInfo.nCarType == TRUCK &amp;&amp; stInfo.nBreakSystem == MANDO)</span>
         {
-<span style = "background-color:#fdd">            printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
+<span style = "background-color:#dfd">            printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
             printf("Truck¿¡´Â MandoÁ¦µ¿ÀåÄ¡ »ç¿ë ºÒ°¡\n");
-        }</span>
-<span style = "background-color:#dfd">        else if (anCarInfo[brakeSystem_Q] == BOSCH_B &amp;&amp; anCarInfo[SteeringSystem_Q] != BOSCH_S)</span>
+        }
+        else if (stInfo.nBreakSystem == BOSCH_B &amp;&amp; stInfo.nStreeringSystem != BOSCH_S)</span>
         {
-<span style = "background-color:#fdd">            printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
+<span style = "background-color:#dfd">            printf("ÀÚµ¿Â÷ ºÎÇ° Á¶ÇÕ Å×½ºÆ® °á°ú : FAIL\n");
             printf("BoschÁ¦µ¿ÀåÄ¡¿¡´Â BoschÁ¶ÇâÀåÄ¡ ÀÌ¿Ü »ç¿ë ºÒ°¡\n");
         }</span>
         else
@@ -218,10 +214,10 @@ public:
             printf("1. Sedan\n");
             printf("2. SUV\n");
             printf("3. Truck\n");
-        }</span>
-<span style = "background-color:#fdd">        else if (nStep == Engine_Q)</span>
+        }
+        else if (nStep == Engine_Q)</span>
         {
-<span style = "background-color:#fdd">            printf(CLEAR_SCREEN);
+<span style = "background-color:#dfd">            printf(CLEAR_SCREEN);
             printf("¾î¶² ¿£ÁøÀ» Å¾ÀçÇÒ±î¿ä?\n");
             printf("0. µÚ·Î°¡±â\n");
             printf("1. GM\n");
@@ -231,7 +227,7 @@ public:
         }
         else if (nStep == brakeSystem_Q)</span>
         {
-<span style = "background-color:#fdd">            printf(CLEAR_SCREEN);
+<span style = "background-color:#dfd">            printf(CLEAR_SCREEN);
             printf("¾î¶² Á¦µ¿ÀåÄ¡¸¦ ¼±ÅÃÇÒ±î¿ä?\n");
             printf("0. µÚ·Î°¡±â\n");
             printf("1. MANDO\n");
@@ -240,7 +236,7 @@ public:
         }
         else if (nStep == SteeringSystem_Q)</span>
         {
-<span style = "background-color:#fdd">            printf(CLEAR_SCREEN);
+<span style = "background-color:#dfd">            printf(CLEAR_SCREEN);
             printf("¾î¶² Á¶ÇâÀåÄ¡¸¦ ¼±ÅÃÇÒ±î¿ä?\n");
             printf("0. µÚ·Î°¡±â\n");
             printf("1. BOSCH\n");
@@ -248,7 +244,7 @@ public:
         }
         else if (nStep == Run_Test)</span>
         {
-<span style = "background-color:#fdd">            printf(CLEAR_SCREEN);
+<span style = "background-color:#dfd">            printf(CLEAR_SCREEN);
             printf("¸ÚÁø Â÷·®ÀÌ ¿Ï¼ºµÇ¾ú½À´Ï´Ù.\n");
             printf("¾î¶² µ¿ÀÛÀ» ÇÒ±î¿ä?\n");
             printf("0. Ã³À½ È­¸éÀ¸·Î µ¹¾Æ°¡±â\n");
@@ -272,7 +268,6 @@ public:
             return false;
         }
         return true;
-
     }
 	bool CheckValidity() {
         // ¼ýÀÚ·Î µÈ ´ë´äÀÎÁö È®ÀÎ
@@ -376,7 +371,7 @@ public:
 
 	void SelectCarType(int answer)
 <span style = "background-color:#dfd">    {
-        anCarInfo[CarType_Q] = answer;
+        stInfo.nCarType = answer;
         if (answer == 1) {
             printf("Â÷·® Å¸ÀÔÀ¸·Î SedanÀ» ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
             pCar = new CarSedan();</span>
@@ -393,7 +388,7 @@ public:
 
 	void SelectEngine(int answer)
 <span style = "background-color:#dfd">    {
-        anCarInfo[Engine_Q] = answer;
+        stInfo.nEngine = answer;
         if (answer == 1)
             printf("GM ¿£ÁøÀ» ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
         if (answer == 2)
@@ -405,7 +400,7 @@ public:
     }</span>
 	void SelectbrakeSystem(int answer)
 <span style = "background-color:#dfd">    {
-        anCarInfo[brakeSystem_Q] = answer;
+        stInfo.nBreakSystem = answer;
         if (answer == 1)
             printf("MANDO Á¦µ¿ÀåÄ¡¸¦ ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
         if (answer == 2)
@@ -416,7 +411,7 @@ public:
     }</span>
 	void SelectSteeringSystem(int answer)
 <span style = "background-color:#dfd">    {
-        anCarInfo[SteeringSystem_Q] = answer;
+        stInfo.nStreeringSystem = answer;
         if (answer == 1)
             printf("BOSCH Á¶ÇâÀåÄ¡¸¦ ¼±ÅÃÇÏ¼Ì½À´Ï´Ù.\n");
         if (answer == 2)

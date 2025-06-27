@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "Types.h"
 #include "Car.h"
-#include "CarFactory.cpp"
+
 //#define CLEAR_SCREEN "\033[H\033[2J"
 
 #ifdef _DEBUG

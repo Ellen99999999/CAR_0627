@@ -8,116 +8,144 @@ using namespace testing;
 
 class TestFixture : public Test {
 public:
-	CarInfo stInfo = {};
 
 };
 
 TEST_F(TestFixture, sedan1) {
 	CarSedan* pCar = new CarSedan();	
-	stInfo = { 1,1,1,1 };	
-	bool result = pCar->isValidCar(stInfo);
+	pCar->SetBreakSystem(1);
+	pCar->SetEngine(1);
+	pCar->SetSteeringSystem(1);
+	bool result = pCar->isValidCar();
 	EXPECT_EQ(result, true);
 
-	stInfo = { 1,2,1,1 };
-	result = pCar->isValidCar(stInfo);
-	EXPECT_EQ(result, true);
+	pCar->SetEngine(2);
+	pCar->SetBreakSystem(2);
+	pCar->SetSteeringSystem(2);
+	result = pCar->isValidCar();
+	EXPECT_EQ(result, false);
 
-	stInfo = { 1,2,3,1 };
-	result = pCar->isValidCar(stInfo);
-	EXPECT_EQ(result, true);
+	pCar->SetEngine(3);
+	pCar->SetBreakSystem(3);
+	pCar->SetSteeringSystem(3);
+	result = pCar->isValidCar();
+	EXPECT_EQ(result, false);
 
-	stInfo = { 1,2,3,4 };
-	result = pCar->isValidCar(stInfo);
-	EXPECT_EQ(result, true);
+	pCar->SetEngine(1);
+	pCar->SetBreakSystem(2);
+	pCar->SetSteeringSystem(3);
+	result = pCar->isValidCar();
+	EXPECT_EQ(result, false);
+
+	pCar->SetEngine(3);
+	pCar->SetBreakSystem(2);
+	pCar->SetSteeringSystem(1);
+	result = pCar->isValidCar();
+	EXPECT_EQ(result, false);
+
+	pCar->SetEngine(3);
+	pCar->SetBreakSystem(2);
+	pCar->SetSteeringSystem(3);
+	result = pCar->isValidCar();
+	EXPECT_EQ(result, false);
 }
 
 
 TEST_F(TestFixture, suv1) {
 	CarSUV* pCar = new CarSUV();
-	stInfo = { 2,1,1,1 };
-	bool result = pCar->isValidCar(stInfo);
+	pCar->SetBreakSystem(1);
+	pCar->SetEngine(1);
+	pCar->SetSteeringSystem(1);
+	bool result = pCar->isValidCar();
 	EXPECT_EQ(result, true);
 
-	stInfo = { 2,2,1,1 };
-	result = pCar->isValidCar(stInfo);
+	pCar->SetEngine(2);
+	pCar->SetBreakSystem(2);
+	pCar->SetSteeringSystem(2);
+	result = pCar->isValidCar();
 	EXPECT_EQ(result, false);
 
-	stInfo = { 2,2,3,1 };
-	result = pCar->isValidCar(stInfo);
+	pCar->SetEngine(3);
+	pCar->SetBreakSystem(3);
+	pCar->SetSteeringSystem(3);
+	result = pCar->isValidCar();
 	EXPECT_EQ(result, false);
 
-	stInfo = { 2,2,3,4 };
-	result = pCar->isValidCar(stInfo);
-	EXPECT_EQ(result, false);
-
-	stInfo = { 2,1,1,1 };
-	result = pCar->isValidCar(stInfo);
+	pCar->SetEngine(1);
+	pCar->SetBreakSystem(2);
+	pCar->SetSteeringSystem(3);
+	result = pCar->isValidCar();
 	EXPECT_EQ(result, true);
 
-	stInfo = { 2,3,3,1 };
-	result = pCar->isValidCar(stInfo);
-	EXPECT_EQ(result, true);
-
-	stInfo = { 2,3,1,1 };
-	result = pCar->isValidCar(stInfo);
+	pCar->SetEngine(3);
+	pCar->SetBreakSystem(2);
+	pCar->SetSteeringSystem(1);
+	result = pCar->isValidCar();
 	EXPECT_EQ(result, true);
 }
 
 
 TEST_F(TestFixture, truck1) {
 	CarTruck* pCar = new CarTruck();
-	stInfo = { 3,1,1,1 };
-	bool result = pCar->isValidCar(stInfo);
+	pCar->SetBreakSystem(1);
+	pCar->SetEngine(1);
+	pCar->SetSteeringSystem(1);
+	bool result = pCar->isValidCar();
+	EXPECT_EQ(result, false);
+
+	pCar->SetEngine(2);
+	pCar->SetBreakSystem(2);
+	pCar->SetSteeringSystem(2);
+	result = pCar->isValidCar();
 	EXPECT_EQ(result, true);
 
-	stInfo = { 3,2,1,1 };
-	result = pCar->isValidCar(stInfo);
+	pCar->SetEngine(3);
+	pCar->SetBreakSystem(3);
+	pCar->SetSteeringSystem(3);
+	result = pCar->isValidCar();
+	EXPECT_EQ(result, false);
+
+	pCar->SetEngine(1);
+	pCar->SetBreakSystem(2);
+	pCar->SetSteeringSystem(3);
+	result = pCar->isValidCar();
 	EXPECT_EQ(result, true);
 
-	stInfo = { 3,2,3,1 };
-	result = pCar->isValidCar(stInfo);
-	EXPECT_EQ(result, true);
-
-	stInfo = { 3,2,3,4 };
-	result = pCar->isValidCar(stInfo);
-	EXPECT_EQ(result, true);
-
-	stInfo = { 3,1,1,4 };
-	result = pCar->isValidCar(stInfo);
-	EXPECT_EQ(result, true);
+	pCar->SetEngine(3);
+	pCar->SetBreakSystem(2);
+	pCar->SetSteeringSystem(1);
+	result = pCar->isValidCar();
+	EXPECT_EQ(result, false);
 }
 
 
 
 TEST_F(TestFixture, sedan2) {
 	CarSedan* pCar = new CarSedan();
-	stInfo = { 1,1,1,1 };
 	pCar->SetEngine(1);
 	pCar->SetBreakSystem(1);
 	pCar->SetSteeringSystem(1);
-	bool result = pCar->isValidCar(stInfo);
+	bool result = pCar->isValidCar();
 	EXPECT_EQ(result, true);
 }
 
 
 TEST_F(TestFixture, suv2) {
 	CarSUV* pCar = new CarSUV();
-	stInfo = { 2,1,1,1 };
 	pCar->SetEngine(1);
 	pCar->SetBreakSystem(1);
 	pCar->SetSteeringSystem(1);
-	bool result = pCar->isValidCar(stInfo);
+	bool result = pCar->isValidCar();
 	EXPECT_EQ(result, true);
 }
 
 
 TEST_F(TestFixture, truck2) {
 	CarTruck* pCar = new CarTruck();
-	stInfo = { 3,2,2,2 };
 	pCar->SetEngine(2);
 	pCar->SetBreakSystem(2);
 	pCar->SetSteeringSystem(2);
-	bool result = pCar->isValidCar(stInfo);
+	bool result = pCar->isValidCar();
 	EXPECT_EQ(result, true);
 }
 
@@ -126,15 +154,13 @@ TEST_F(TestFixture, factorySedan) {
 	pCar->SetBreakSystem(2);
 	pCar->SetEngine(2);
 	pCar->SetSteeringSystem(2);
-	stInfo = {1,2,2,2};
-	bool result = pCar->isValidCar(stInfo);
+	bool result = pCar->isValidCar();
 	EXPECT_EQ(result, false);
 
 	pCar->SetBreakSystem(1);
 	pCar->SetEngine(1);
 	pCar->SetSteeringSystem(1);
-	stInfo = { 1,1,1,1 };
-	result = pCar->isValidCar(stInfo);
+	result = pCar->isValidCar();
 	EXPECT_EQ(result, true);
 }
 
@@ -143,15 +169,13 @@ TEST_F(TestFixture, factorySUV) {
 	pCar->SetBreakSystem(2);
 	pCar->SetEngine(2);
 	pCar->SetSteeringSystem(2);
-	stInfo = { 2,2,2,2 };
-	bool result = pCar->isValidCar(stInfo);
+	bool result = pCar->isValidCar();
 	EXPECT_EQ(result, false);
 
 	pCar->SetBreakSystem(1);
 	pCar->SetEngine(1);
 	pCar->SetSteeringSystem(1);
-	stInfo = { 2,1,1,1 };
-	result = pCar->isValidCar(stInfo);
+	result = pCar->isValidCar();
 	EXPECT_EQ(result, true);
 }
 
@@ -161,46 +185,82 @@ TEST_F(TestFixture, factoryTruck) {
 	pCar->SetBreakSystem(2);
 	pCar->SetEngine(2);
 	pCar->SetSteeringSystem(2);
-	stInfo = { 3,2,2,2 };
-	bool result = pCar->isValidCar(stInfo);
+	bool result = pCar->isValidCar();
 	EXPECT_EQ(result, true);
 
 	pCar->SetBreakSystem(1);
 	pCar->SetEngine(1);
 	pCar->SetSteeringSystem(1);
-	stInfo = { 3,1,1,1 };
-	result = pCar->isValidCar(stInfo);
+	result = pCar->isValidCar();
 	EXPECT_EQ(result, false);
 }
 
 
-TEST_F(TestFixture, factoryFunc1) {
+TEST_F(TestFixture, factoryFuncSedan) {
 	CarFactory* pFac = new CarFactory();
-	pFac->ShowPrint();
 	pFac->SelectCarType(1);
-	pFac->SelectEngine(1);
-	pFac->SelectbrakeSystem(1);
-	pFac->SelectSteeringSystem(1);
-	pFac->TestProducedCar();
-	pFac->RunProducedCar();
+
+	for (int i = 1; i <= 4; i++) {
+		for (int j = 1; j <= 4; j++) {
+			for (int k = 1; k <= 4; k++) {
+				pFac->SelectEngine(i);
+				pFac->SelectbrakeSystem(j);
+				pFac->SelectSteeringSystem(k);
+				pFac->TestProducedCar();
+				pFac->RunProducedCar();
+			}
+		}
+	}
 }
 
-TEST_F(TestFixture, factoryFunc2) {
+TEST_F(TestFixture, factoryFuncSUV) {
 	CarFactory* pFac = new CarFactory();
 	pFac->SelectCarType(2);
-	pFac->SelectEngine(2);
-	pFac->SelectbrakeSystem(2);
-	pFac->SelectSteeringSystem(2);
-	pFac->TestProducedCar();
-	pFac->RunProducedCar();
+
+	for (int i = 1; i <= 4; i++) {
+		for (int j = 1; j <= 4; j++) {
+			for (int k = 1; k <= 4; k++) {
+				pFac->SelectEngine(i);
+				pFac->SelectbrakeSystem(j);
+				pFac->SelectSteeringSystem(k);
+				pFac->TestProducedCar();
+				pFac->RunProducedCar();
+			}
+		}
+	}
 }
 
-TEST_F(TestFixture, factoryFunc3) {
+TEST_F(TestFixture, factoryFuncTruck) {
 	CarFactory* pFac = new CarFactory();
 	pFac->SelectCarType(3);
-	pFac->SelectEngine(3);
-	pFac->SelectbrakeSystem(3);
-	pFac->SelectSteeringSystem(3);
-	pFac->TestProducedCar();
-	pFac->RunProducedCar();
+
+	for (int i = 1; i <= 4; i++) {
+		for (int j = 1; j <= 4; j++) {
+			for (int k = 1; k <= 4; k++) {
+				pFac->SelectEngine(i);
+				pFac->SelectbrakeSystem(j);
+				pFac->SelectSteeringSystem(k);
+				pFac->TestProducedCar();
+				pFac->RunProducedCar();
+			}
+		}
+	}
+}
+
+TEST_F(TestFixture, factoryFuncEtc1) {
+	CarFactory* pFac = new CarFactory();
+	pFac->nStep = CarType_Q;
+	pFac->ShowPrint();
+
+	pFac->nStep = Engine_Q;
+	pFac->ShowPrint();
+
+	pFac->nStep = brakeSystem_Q;
+	pFac->ShowPrint();
+
+	pFac->nStep = SteeringSystem_Q;
+	pFac->ShowPrint();
+
+	pFac->nStep = Run_Test;
+	pFac->ShowPrint();
 }
