@@ -15,28 +15,34 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CarFactory.cpp">
+    <ClInclude Include="..\Car.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Types.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\CarFactory.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="..\CarSedan.h">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CarSedan.cpp">
+    <ClCompile Include="..\CarSUV.h">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CarSUV.cpp">
+    <ClCompile Include="..\CarTruck.h">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CarTruck.cpp">
+    <ClCompile Include="..\main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\testcase.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Car.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Types.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

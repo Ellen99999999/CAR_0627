@@ -229,7 +229,7 @@ void SelectSteeringSystem(int answer)
         printf("MOBIS 조향장치를 선택하셨습니다.\n");
 }
 
-int isValidCar()
+bool isValidCar()
 {
     if (anCarInfo[CarType_Q] == SEDAN && anCarInfo[brakeSystem_Q] == CONTINENTAL)
     {
@@ -250,10 +250,6 @@ int isValidCar()
     else if (anCarInfo[brakeSystem_Q] == BOSCH_B && anCarInfo[SteeringSystem_Q] != BOSCH_S)
     {
         return false;
-    }
-    else
-    {
-        return true;
     }
     return true;
 }

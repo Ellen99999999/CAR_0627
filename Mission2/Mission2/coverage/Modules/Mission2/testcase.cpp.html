@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>testcase.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+    <body onload="prettyPrint()">
+        <h4></h4>
+        <pre class="prettyprint lang-cpp linenums">
+#include "gmock/gmock.h"
+#include "Types.h"
+#include "Car.h"
+
+
+using namespace testing;
+
+
+class TestFixture : public Test {
+public:
+	CarInfo stInfo = {};
+
+};
+
+<span style = "background-color:#dfd">TEST_F(TestFixture, sedan1) {
+	CarSedan* pCar = new CarSedan();	
+	stInfo = { 1,1,1,1 };	
+	bool result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 1,2,1,1 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 1,2,3,1 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 1,2,3,4 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);
+}</span>
+
+
+<span style = "background-color:#dfd">TEST_F(TestFixture, suv1) {
+	CarSUV* pCar = new CarSUV();
+	stInfo = { 2,1,1,1 };
+	bool result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 2,2,1,1 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, false);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 2,2,3,1 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, false);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 2,2,3,4 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, false);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 2,1,1,1 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 2,3,3,1 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 2,3,1,1 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);
+}</span>
+
+
+<span style = "background-color:#dfd">TEST_F(TestFixture, truck1) {
+	CarTruck* pCar = new CarTruck();
+	stInfo = { 3,1,1,1 };
+	bool result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 3,2,1,1 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 3,2,3,1 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 3,2,3,4 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);</span>
+
+<span style = "background-color:#dfd">	stInfo = { 3,1,1,4 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);
+}</span>
+
+
+
+<span style = "background-color:#dfd">TEST_F(TestFixture, sedan2) {
+	CarSedan* pCar = new CarSedan();
+	stInfo = { 1,1,1,1 };
+	pCar-&gt;SetEngine(1);
+	pCar-&gt;SetBreakSystem(1);
+	pCar-&gt;SetSteeringSystem(1);
+	bool result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);
+}</span>
+
+
+<span style = "background-color:#dfd">TEST_F(TestFixture, suv2) {
+	CarSUV* pCar = new CarSUV();
+	stInfo = { 2,1,1,1 };
+	pCar-&gt;SetEngine(1);
+	pCar-&gt;SetBreakSystem(1);
+	pCar-&gt;SetSteeringSystem(1);
+	bool result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);
+}</span>
+
+
+<span style = "background-color:#dfd">TEST_F(TestFixture, truck2) {
+	CarTruck* pCar = new CarTruck();
+	stInfo = { 3,2,2,2 };
+	pCar-&gt;SetEngine(2);
+	pCar-&gt;SetBreakSystem(2);
+	pCar-&gt;SetSteeringSystem(2);
+	bool result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(TestFixture, factorySedan) {
+	ICar* pCar = new CarSedan();
+	pCar-&gt;SetBreakSystem(2);
+	pCar-&gt;SetEngine(2);
+	pCar-&gt;SetSteeringSystem(2);
+	stInfo = {1,2,2,2};
+	bool result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, false);</span>
+
+<span style = "background-color:#dfd">	pCar-&gt;SetBreakSystem(1);
+	pCar-&gt;SetEngine(1);
+	pCar-&gt;SetSteeringSystem(1);
+	stInfo = { 1,1,1,1 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(TestFixture, factorySUV) {
+	ICar* pCar = new CarSUV();
+	pCar-&gt;SetBreakSystem(2);
+	pCar-&gt;SetEngine(2);
+	pCar-&gt;SetSteeringSystem(2);
+	stInfo = { 2,2,2,2 };
+	bool result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, false);</span>
+
+<span style = "background-color:#dfd">	pCar-&gt;SetBreakSystem(1);
+	pCar-&gt;SetEngine(1);
+	pCar-&gt;SetSteeringSystem(1);
+	stInfo = { 2,1,1,1 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);
+}</span>
+
+
+<span style = "background-color:#dfd">TEST_F(TestFixture, factoryTruck) {
+	ICar* pCar = new CarTruck();
+	pCar-&gt;SetBreakSystem(2);
+	pCar-&gt;SetEngine(2);
+	pCar-&gt;SetSteeringSystem(2);
+	stInfo = { 3,2,2,2 };
+	bool result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, true);</span>
+
+<span style = "background-color:#dfd">	pCar-&gt;SetBreakSystem(1);
+	pCar-&gt;SetEngine(1);
+	pCar-&gt;SetSteeringSystem(1);
+	stInfo = { 3,1,1,1 };
+	result = pCar-&gt;isValidCar(stInfo);
+	EXPECT_EQ(result, false);
+}</span>
+
+
+<span style = "background-color:#dfd">TEST_F(TestFixture, factoryFunc1) {
+	CarFactory* pFac = new CarFactory();
+	pFac-&gt;ShowPrint();
+	pFac-&gt;SelectCarType(1);
+	pFac-&gt;SelectEngine(1);
+	pFac-&gt;SelectbrakeSystem(1);
+	pFac-&gt;SelectSteeringSystem(1);
+	pFac-&gt;TestProducedCar();
+	pFac-&gt;RunProducedCar();
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(TestFixture, factoryFunc2) {
+	CarFactory* pFac = new CarFactory();
+	pFac-&gt;SelectCarType(2);
+	pFac-&gt;SelectEngine(2);
+	pFac-&gt;SelectbrakeSystem(2);
+	pFac-&gt;SelectSteeringSystem(2);
+	pFac-&gt;TestProducedCar();
+	pFac-&gt;RunProducedCar();
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(TestFixture, factoryFunc3) {
+	CarFactory* pFac = new CarFactory();
+	pFac-&gt;SelectCarType(3);
+	pFac-&gt;SelectEngine(3);
+	pFac-&gt;SelectbrakeSystem(3);
+	pFac-&gt;SelectSteeringSystem(3);
+	pFac-&gt;TestProducedCar();
+	pFac-&gt;RunProducedCar();
+}</span></pre>
+        <hr />
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th align="center">
+                        <small>Generated by</small>
+                        <a href="https://github.com/OpenCppCoverage/OpenCppCoverage/releases">
+                            <strong>OpenCppCoverage (Version: 0.9.9.0)</strong>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </body>
+</html>
